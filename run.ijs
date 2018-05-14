@@ -5,7 +5,7 @@ Note 'Table 2-1'
 Calculation of the Mean and Standard Deviation
 These resuls differ from m28 http://jsoftware.com/help/phrases/math_stats.htm
 because they are the 'sample' SD, not the population SD, and so use n-1 as
-the divisor.
+the divisor (Bessel's correction).
 
 Runs about as fast as m28 referenced above
 )
@@ -15,6 +15,7 @@ mean =. (+/y)%#y
 variance =. (+/*:(y-mean))%<:#y
 mean, %:variance
 )
+smoutput 'msd samp255:'; msd samp255
 
 Note 'Table 2-2'
 Mean and Standard Deviation using running statistics
@@ -29,7 +30,6 @@ for_yi. y do.
   sum =. sum+yi
   sumsquares =. sumsquares + *:yi
   mean =. sum%n
-NB.   smoutput 'sum';sum;'sumsquares';sumsquares;'mean';mean
   if. n=1 do.
 	sd =. 0
   else. sd =. %:((sumsquares-((*:sum)%n))%<:n)
@@ -37,9 +37,11 @@ NB.   smoutput 'sum';sum;'sumsquares';sumsquares;'mean';mean
 mean, sd
 end.
 )
+smoutput 'msdr1 samp255:'; msdr1 samp255
+assert (msdr1 samp255) -: msd samp255
 
 msdr2 =: 3 : 0
-sum =. }.+/\y
+sum =. _1}+/\y
 sumsquares =. +/*:y
 n =. #y
 mean =. sum%#y
@@ -48,6 +50,8 @@ if. 1=n do. sd=.0
   end.
 mean, sd
 )
+smoutput 'msdr2 samp255:'; msdr2 samp255
+assert (msdr2 samp255) -: msd samp255
 
 Note 'Table 2-3'
 Calculation of the Histogram, Mean, and Standard Deviation
@@ -64,9 +68,20 @@ variance =. +/h* *:(i.256)-mean
 sd =. %:variance%<:#y
 mean, sd
 )
+smoutput 'msdhist samp255:'; msdhist samp255
 
-samp =: ?100000 $ 255
-msdsamp samp
+assert (msdhist samp255) -: msd samp255
+
+Note 'Table 2-4'
+Calculation of Binned Histogram
+Samples assumed 0.0 to 10.0 to be put into 1000 bins
+)
+binnedhisto =: 3 : 0
+binNums =. <. 100*y
+
+
+)
+
 
 
 
