@@ -1,3 +1,5 @@
+load '~user/projects/DigitalSignalProcessing/init.ijs'
+
 Note 'Chapter 2'
  - Statistics, Probability and Noise
 )
