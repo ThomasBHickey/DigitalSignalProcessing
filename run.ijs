@@ -82,7 +82,7 @@ binnedhisto =: 3 : 0
 )
 
 binnedhisto samp10
-NB. Triangle distribution
+NB. Triangle distribution Figure 2-10 b
 plot (2*(i.100)%100) histogram +/?2 1000000 $0
-NB. Close to Gaussian
+NB. Close to Gaussian Figure 2-10 c
 plot (12*(i.100)%100) histogram +/?12 1000000 $0
