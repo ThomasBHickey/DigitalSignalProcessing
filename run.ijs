@@ -20,7 +20,7 @@ smoutput 'msd samp255:'; msd samp255
 Note 'Table 2-2'
 Mean and Standard Deviation using running statistics
 
-msdr1 runs about 80x slower than the above for 100000 = #y
+msdr1 runs about 80x slower than msd above for 100000 = #y
 msdr2 runs 30x faster than msdr1
 )
 msdr1=: 3 : 0 
@@ -56,17 +56,16 @@ assert (msdr2 samp255) -: msd samp255
 Note 'Table 2-3'
 Calculation of the Histogram, Mean, and Standard Deviation
 
-On a 100k sample (range i.256) this took 50x time and 30x space
-than the simple msd.  I'm sure the space could be improved, but 
-it does work.
+On a 100k sample (range i.256) this runs about the speed of msd above
 )
 
 msdhist =: 3 : 0
-h =. +/"1 (i.256)=/y
-mean =. (+/h*i.256)%#y
-variance =. +/h* *:(i.256)-mean
-sd =. %:variance%<:#y
-mean, sd
+  NB. h =. +/"1 (i.256)=/y
+  h =. (i.256) histogram y
+  mean =. (+/h*i.256)%#y
+  variance =. +/h* *:(i.256)-mean
+  sd =. %:variance%<:#y
+  mean, sd
 )
 smoutput 'msdhist samp255:'; msdhist samp255
 
@@ -76,14 +75,14 @@ Note 'Table 2-4'
 Calculation of Binned Histogram
 Samples assumed 0.0 to 10.0 to be put into 1000 bins
 )
+
 binnedhisto =: 3 : 0
-binNums =. <. 100*y
-
-
+  binStarts =. (i.1000) % 1000
+  binStarts histogram y
 )
 
-
-
-
-
-
+binnedhisto samp10
+NB. Triangle distribution
+plot (2*(i.100)%100) histogram +/?2 1000000 $0
+NB. Close to Gaussian
+plot (12*(i.100)%100) histogram +/?12 1000000 $0
