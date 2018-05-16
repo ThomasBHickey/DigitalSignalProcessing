@@ -116,8 +116,27 @@ inputSig9 inputSideConv impResp9
 
 NB. a more J'ish convolution
 NB. more than 10x faster for small tests
-inputSideConva =: 4 : '+/ /. x*/y'
+convolution =: 4 : '+/ /. x*/y'
 NB. the tacit form
 tconvolution =: [: +//. */
 
 assert (inputSig9 inputSideConv impResp9) -: inputSig9 tconvolution impResp9
+
+Note 'Table 6-2'
+Convolution using the Output Side Algorithm
+This is the simple translation to J.  'convolution' and
+'tconvolution' seem to sidestep the difference.
+)
+outputSideConv =: 4 : 0
+  outSignal =. (<:(#x)+#y) # 0
+  for_i. i.#outSignal do.
+    for_j. i.#y do. NB. impulseResponse
+	if. ((i-j)>:0) *. (i-j)<#x do.
+	  outSignal =. ((i{outSignal)+(j{y)*(i-j){x ) i}outSignal
+	end.
+    end.
+  end.
+  outSignal
+)
+assert (inputSig9 outputSideConv impResp9) -: inputSig9 tconvolution impResp9
+
