@@ -88,3 +88,28 @@ NB. Triangle distribution Figure 2-10 b
 plot (2*(i.100)%100) histogram +/?2 1000000 $0
 NB. Close to Gaussian Figure 2-10 c
 plot (12*(i.100)%100) histogram +/?12 1000000 $0
+
+
+Note 'Chapter 6'
+ - Convolution -
+ No programs in chapters 3-5!
+)
+
+Note 'Table 6-1'
+Convolution using the Input Side Algorithm
+)
+inputSideConv =: 4 : 0 NB. inputSignal inputSideConv impulseResponse
+  outSignal =. (<:(#x) + #y) # 0
+  for_i. i.#x do.    NB. inputSignal (x)
+    for_j. i.#y do.  NB. impulseResponse  (y)
+	outSignal =. ( ((i+j){outSignal) + ((i{x)*j{y) ) (i+j)} outSignal 
+    end.
+  end.
+  outSignal
+)
+
+inputSig9 =: 0 _1 _1.2 2 1.3 1.3 0.7 0 _0.7
+impResp9  =: 1 _0.5 _0.3 _0.2
+
+inputSig9 inputSideConv impResp9
+
