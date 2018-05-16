@@ -98,6 +98,7 @@ Note 'Chapter 6'
 Note 'Table 6-1'
 Convolution using the Input Side Algorithm
 )
+NB. A naive translation to J
 inputSideConv =: 4 : 0 NB. inputSignal inputSideConv impulseResponse
   outSignal =. (<:(#x) + #y) # 0
   for_i. i.#x do.    NB. inputSignal (x)
@@ -112,4 +113,8 @@ inputSig9 =: 0 _1 _1.2 2 1.3 1.3 0.7 0 _0.7
 impResp9  =: 1 _0.5 _0.3 _0.2
 
 inputSig9 inputSideConv impResp9
+NB. a more J'ish convolution
+NB. more than 10x faster for small tests
+
+inputSideConva =: 4 : '+//.x*/y'
 
