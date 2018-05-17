@@ -114,13 +114,13 @@ impResp9  =: 1 _0.5 _0.3 _0.2
 
 inputSig9 inputSideConv impResp9
 
-NB. a more J'ish convolution
-NB. more than 10x faster for small tests
+NB. Simpler convolution implementations 
+NB. more than 10x faster on small tests
 convolution =: 4 : '+/ /. x*/y'
-NB. the tacit form
-tconvolution =: [: +//. */
+tconvolution =: [: +//. */  NB. the tacit form
 
-assert (inputSig9 inputSideConv impResp9) -: inputSig9 tconvolution impResp9
+assert (inputSig9 inputSideConv impResp9) -: inputSig9 convolution impResp9
+assert (inputSig9 convolution impResp9) -: inputSig9 tconvolution impResp9
 
 Note 'Table 6-2'
 Convolution using the Output Side Algorithm
