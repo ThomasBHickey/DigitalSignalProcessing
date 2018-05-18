@@ -116,11 +116,11 @@ inputSig9 inputSideConv impResp9
 
 NB. Simpler convolution implementations 
 NB. more than 10x faster on small tests
-convolution =: 4 : '+/ /. x*/y'
-tconvolution =: [: +//. */  NB. the tacit form
+conv =: 4 : '+/ /. x*/y'
+tconv =: [: +//. */  NB. the tacit form
 
-assert (inputSig9 inputSideConv impResp9) -: inputSig9 convolution impResp9
-assert (inputSig9 convolution impResp9) -: inputSig9 tconvolution impResp9
+assert (inputSig9 inputSideConv impResp9) -: inputSig9 conv impResp9
+assert (inputSig9 convolution impResp9) -: inputSig9 tconv impResp9
 
 Note 'Table 6-2'
 Convolution using the Output Side Algorithm
@@ -138,5 +138,35 @@ outputSideConv =: 4 : 0
   end.
   outSignal
 )
-assert (inputSig9 outputSideConv impResp9) -: inputSig9 tconvolution impResp9
+assert (inputSig9 outputSideConv impResp9) -: inputSig9 tconv impResp9
 
+Note 'Chapter 7'
+Properties of Convolution
+No programs in Chapter 7, but I try to
+reproduce some of the examples.
+)
+
+Note 'Figure 7-1'
+Simple impulse responses using shifed and scaled delta functions
+)
+
+NB. 7-1a
+identity9 =. 0 0 1 0 0 0 0 0 0
+NB. drop some leading/trailing 0's and compare to the input
+assert  inputSig9 -: (2+i.#inputSig9) {inputSig9 conv identity9
+
+NB. 7-1b
+amp9 =. 0 0 1.6 0 0 0 0 0 0
+assert  (1.6*inputSig9) -: (2+i.#inputSig9) {inputSig9 conv amp9
+
+NB. 7-1c
+shift9 =. 0 0 0 0 0 0 1 0 0
+assert inputSig9 -: (2+4+i.#inputSig9){inputSig9 conv shift9  NB. shifted4
+
+NB. 7-1d
+echo9 =.     0 0 1 0 0 0 0.6 0 0
+justEcho9 =. 0 0 0 0 0 0 0.6 0 0
+1 1 1 1 1 1 1 1 1 conv echo9  NB. looks good
+assert (inputSig9 conv echo9) -: (inputSig9 conv identity9) + inputSig9 conv justEcho9
+(1 1 1 1 1 1 1 1 1 conv identity9) conv justEcho9
+1 1 1 1 1 1 1 1 1 conv justEcho9
