@@ -13,5 +13,5 @@ histogram =: 4 : '<: #/.~ (i.#x), x I. y'
 d=: +/ 10 1e6 ?.@$ 21
 e=: 5 * i.40
 
-resetPlot =. 'reset;type dot;pensize 2;symbols square'
+plotOpts =. 'type dot;pensize 2;symbols square'
 

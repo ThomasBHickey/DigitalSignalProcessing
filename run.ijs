@@ -191,7 +191,7 @@ NB. Figure 7-3a
 NB. computed runningSumVal back to firstDifVal
 pd 81{.2}. runningSumVal conv firstDiff
 pd 'show'
-pd 81 {. 2}. runningSum conv runningSumVal conv firstDiff
-pd runningSumVal
+pd 81 {. 2}. runningSum conv 81{. 2}. runningSumVal conv firstDiff
 pd 'show'
+assert runningSumVal -: 81{. 2}. runningSum conv 81{. 2}. runningSumVal conv firstDiff
 
