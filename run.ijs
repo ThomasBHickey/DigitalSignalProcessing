@@ -144,29 +144,54 @@ Note 'Chapter 7'
 Properties of Convolution
 No programs in Chapter 7, but I try to
 reproduce some of the examples.
+assert  inputSig9 -: (2+i.#inputSig9) {inputSig9 conv identity9
+
+NB. Figure 7-1b
+amp9 =. 0 0 1.6 0 0 0 0 0 0
+assert  (pad9 1.6*inputSig9) -: inputSig9 conv amp9
+
+NB. Figure 7-1c
+shift9 =. 0 0 0 0 0 0 1 0 0
+assert (shift4 pad9 inputSig9) -: inputSig9 conv shift9
+
+NB. Figure 7-1d
+echo9 =.     0 0 1 0 0 0 0.6 0 0
+justEcho9 =. 0 0 0 0 0 0 0.6 0 0
+1 1 1 1 1 1 1 1 1 conv echo9  NB. looks good
+assert (inputSig9 conv echo9) -: (inputSig9 conv identity9) + inputSig9 conv justEcho9
+
+NB. Figure 7-2a
 )
 
 Note 'Figure 7-1'
 Simple impulse responses using shifed and scaled delta functions
 )
 
-NB. 7-1a
+NB. Figure 7-1a
 identity9 =. 0 0 1 0 0 0 0 0 0
+trim9 =. (2+i.9) { ]
+shift4 =. ] (0 0 0 0 , _4 }. ])
+pad9 =. 0 0 , 0 0 0 0 0 0 ,~ ]
 NB. drop some leading/trailing 0's and compare to the input
-assert  inputSig9 -: (2+i.#inputSig9) {inputSig9 conv identity9
+firstDiff =. 0 0 1 _1 0 0 0 0 0
 
-NB. 7-1b
-amp9 =. 0 0 1.6 0 0 0 0 0 0
-assert  (1.6*inputSig9) -: (2+i.#inputSig9) {inputSig9 conv amp9
 
-NB. 7-1c
-shift9 =. 0 0 0 0 0 0 1 0 0
-assert inputSig9 -: (2+4+i.#inputSig9){inputSig9 conv shift9  NB. shifted4
+NB. Figure 7-2b
+runningSum =. 0 0 , (79+9)$1
 
-NB. 7-1d
-echo9 =.     0 0 1 0 0 0 0.6 0 0
-justEcho9 =. 0 0 0 0 0 0 0.6 0 0
-1 1 1 1 1 1 1 1 1 conv echo9  NB. looks good
-assert (inputSig9 conv echo9) -: (inputSig9 conv identity9) + inputSig9 conv justEcho9
-(1 1 1 1 1 1 1 1 1 conv identity9) conv justEcho9
-1 1 1 1 1 1 1 1 1 conv justEcho9
+NB. Figure 7-3 b
+rcurve =. (|.(+/\^:5) i.30)%9e6
+firstDifVal =. (11$0),(10$0.03),(10$0.07),(10$0),(10$_0.18),rcurve
+NB. hand built firstDifference to running sum
+pd resetPlot
+pd firstDifVal
+pd [runningSumVal=. 81{. 2}. firstDifVal conv runningSum
+pd 'show'
+NB. Figure 7-3a
+NB. computed runningSumVal back to firstDifVal
+pd 81{.2}. runningSumVal conv firstDiff
+pd 'show'
+pd 81 {. 2}. runningSum conv runningSumVal conv firstDiff
+pd runningSumVal
+pd 'show'
+
