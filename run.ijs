@@ -120,12 +120,12 @@ conv =: 4 : '+/ /. x*/y'
 tconv =: [: +//. */  NB. the tacit form
 
 assert (inputSig9 inputSideConv impResp9) -: inputSig9 conv impResp9
-assert (inputSig9 convolution impResp9) -: inputSig9 tconv impResp9
+assert (inputSig9 conv impResp9) -: inputSig9 tconv impResp9
 
 Note 'Table 6-2'
 Convolution using the Output Side Algorithm
-This is the simple translation to J.  'convolution' and
-'tconvolution' seem to sidestep the difference.
+This is the simple translation to J.  'conv' and
+'tconv' seem to sidestep the difference.
 )
 outputSideConv =: 4 : 0
   outSignal =. (<:(#x)+#y) # 0
@@ -181,11 +181,11 @@ runningSum =. 0 0 , (79+9)$1
 
 NB. Figure 7-3 b
 rcurve =. (|.(+/\^:5) i.30)%9e6
-firstDifVal =. (11$0),(10$0.03),(10$0.07),(10$0),(10$_0.18),rcurve
+firstDiffVal =. (11$0),(10$0.03),(10$0.07),(10$0),(10$_0.18),rcurve
 NB. hand built firstDifference to running sum
-pd resetPlot
-pd firstDifVal
-pd [runningSumVal=. 81{. 2}. firstDifVal conv runningSum
+pd plotOpts
+pd firstDiffVal
+pd [runningSumVal=. 81{. 2}. firstDiffVal conv runningSum
 pd 'show'
 NB. Figure 7-3a
 NB. computed runningSumVal back to firstDifVal
