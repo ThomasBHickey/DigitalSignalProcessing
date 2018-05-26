@@ -173,25 +173,23 @@ trim9 =. (2+i.9) { ]
 shift4 =. ] (0 0 0 0 , _4 }. ])
 pad9 =. 0 0 , 0 0 0 0 0 0 ,~ ]
 NB. drop some leading/trailing 0's and compare to the input
-firstDiff =. 0 0 1 _1 0 0 0 0 0
 
-
+NB. Figure 7-2a
+firstDiffImp =. 0 0 1 _1 0 0 0 0 0
 NB. Figure 7-2b
-runningSum =. 0 0 , (79+9)$1
+runningSumImp =. 0 0 , (79+9)$1
 
-NB. Figure 7-3 b
+NB. Hand built Figure 7-3b
 rcurve =. (|.(+/\^:5) i.30)%9e6
 firstDiffVal =. (11$0),(10$0.03),(10$0.07),(10$0),(10$_0.18),rcurve
-NB. hand built firstDifference to running sum
-pd plotOpts
-pd firstDiffVal
-pd [runningSumVal=. 81{. 2}. firstDiffVal conv runningSum
-pd 'show'
-NB. Figure 7-3a
+plotOpts plot firstDiffVal
+
+NB. Computed 7-3a
+plotOpts plot [runningSumVal=. 81{. 2}.   firstDiffVal conv runningSumImp
+
+NB. and back to Figure 7-3b
 NB. computed runningSumVal back to firstDifVal
-pd 81{.2}. runningSumVal conv firstDiff
-pd 'show'
-pd 81 {. 2}. runningSum conv 81{. 2}. runningSumVal conv firstDiff
-pd 'show'
-assert runningSumVal -: 81{. 2}. runningSum conv 81{. 2}. runningSumVal conv firstDiff
+plotOpts plot 81{.2}. runningSumVal conv firstDiffImp
+NB. See if back and forth gives a round trip
+assert runningSumVal -: 81{. 2}. runningSumImp conv 81{. 2}. runningSumVal conv firstDiffImp
 
