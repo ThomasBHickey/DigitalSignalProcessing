@@ -66,6 +66,7 @@ plotOpts plot firstDif runningSumVal
 firstDif2 =: 3 : '0, (}.y) - }:y'
 firstDif2a =: 3 : '0, (}. - }:) y'
 assert (firstDif2 runningSumVal) -: firstDif runningSumVal
+NB. Here is the tacit version
 firstDift =: 0 , }. - }:
 
 runningSum =: 3 : 0
@@ -75,7 +76,21 @@ runningSum =: 3 : 0
   end.
   yd
 )	
+NB. The tacit verstion is a bit shorter!
+runningSumt =. +/\
 
-runningSumt =. +/\i.#
+Note 'Figure 7-4'
+Typical low-pass filter kernels
+)
+NB. Figure 7-4 a. Exponential
+plotOpts plot (_20+i.41); (20#0), 0.22 % 1.25^i.21
+
+NB. Figure 7-4b. Square pulse
+plotOpts plot (_20+i.41); (20#0), (9#0.1), 12#0
+
+NB. Figure 7-4c. Sinc
+
+x =. _20+i.41
+plotOpts plot x; (sin x)%x
 
 
