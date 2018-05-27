@@ -64,7 +64,18 @@ yd
 plotOpts plot firstDif runningSumVal
 
 firstDif2 =: 3 : '0, (}.y) - }:y'
+firstDif2a =: 3 : '0, (}. - }:) y'
 assert (firstDif2 runningSumVal) -: firstDif runningSumVal
+firstDift =: 0 , }. - }:
 
+runningSum =: 3 : 0
+  yd =. {. y
+  for_i. 1+i.<:#y do.
+	yd =. yd, ((<:i){yd) + i{y
+  end.
+  yd
+)	
+
+runningSumt =. +/\i.#
 
 
