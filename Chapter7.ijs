@@ -62,3 +62,9 @@ yd
 )
 
 plotOpts plot firstDif runningSumVal
+
+firstDif2 =: 3 : '0, (}.y) - }:y'
+assert (firstDif2 runningSumVal) -: firstDif runningSumVal
+
+
+
