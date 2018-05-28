@@ -32,9 +32,10 @@ justEcho9 =: 0 0 0 0 0 0 0.6 0 0
 assert (inputSig9 conv echo9) -: (inputSig9 conv identity9) + inputSig9 conv justEcho9
 
 NB. Figure 7-2a
-firstDiffImp =: 0 0 1 _1 0 0 0 0 0
+firstDiffImp =: 0 0 1 _1 , 77$0 
 NB. Figure 7-2b
-runningSumImp =: 0 0 , (79+9)$1
+runningSumImp =: 0 0 , 79$1
+NB.runningSumImp=: 0 0 1  1 1 1 1 1 1
 
 NB. Hand built Figure 7-3b
 rcurve =: (|.(+/\^:5) i.30)%9e6
@@ -42,7 +43,7 @@ firstDiffVal =: (11$0),(10$0.03),(10$0.07),(10$0),(10$_0.18),rcurve
 plotOpts plot firstDiffVal
 
 NB. Computed 7-3a
-runningSumVal=: 81{. 2}.   firstDiffVal conv runningSumImp
+runningSumVal=: 81{. 2}.   firstDiffVal conv runningSumImp, 70$1  NB. extend runninSumImp
 plotOpts plot runningSumVal
 NB. and back to Figure 7-3b
 NB. computed runningSumVal back to firstDifVal
@@ -106,3 +107,66 @@ NB. Figure 7-5b Square pulse
 plotOpts plot xscale;delta-sqV
 NB. Figure 7-5c Sinc
 plotOpts plot xscale;delta-sincV
+
+Note 'Figure 7-8'
+Communutative property in system theory
+)
+a =. firstDiffVal
+b =. runningSumImp
+yab =. a conv b
+yba =. b conv a
+assert yab -: yba
+
+Note 'Figure 7-9'
+Associative property in system theory
+)
+xn =. firstDiffVal
+h1n =. runningSumImp
+h2n =. firstDiffImp
+yna =. (#xn){.(xn conv h1n) conv h2n
+ynb =. (#xn){.(xn conv h2n) conv h1n
+assert 1e_10>+/|yna-ynb  NB. not quite the same, but sum of differences is small
+NB. ALSO Convolution using a convolved convolution
+h12n =. (#xn){.h1n conv h2n NB. combine the convolutions first
+ync  =. (#xn){.xn conv 81{.h12n
+assert 1e_14>|+/ync - yna 
+(firstDiffVal conv runninSumImp)
+
+Note 'Figure 7-10'
+Distributive property in system theory
+)
+yna =. (xn conv h1n) + xn conv h2n
+ynb =. xn conv h1n+h2n
+assert 1e_14>+/|yna-ynb  NB. sum of magnitudes of differences is small
+
+Note 'Figute 7-11'
+Transference between the input and output
+)
+
+xna =. firstDiffVal
+hn =. runningSumImp
+yna =. (#xna){.xna conv hn
+xnb =. 3*xna
+ynb =. (#xna){.xnb conv hn
+assert 1e_12>+/|ynb-3*yna
+
+Note 'Figure 7-12'
+Convolving a pulse with itself
+)
+xn =. (15#0), (5#1), (5#0), (5#1), 15#0
+plotOpts plot xn
+plotOpts plot xn conv xn
+plotOpts plot xn conv xn conv xn
+plotOpts plot (xn conv xn) conv (xn conv xn)
+plotOpts plot xn conv xn conv xn conv xn conv xn conv xn conv xn conv xn conv xn
+
+Note 'Figure 7-13'
+Correlation
+)
+
+plot spike =. (10#0), (100 -20*i.6), 75#0
+plot shiftScaleSpike =. _65 |. spike%100
+plot noise =. _0.1 + 0.2 * ?(#spike)#0
+plot noiseSSSpike =. noise+shiftScaleSpike
+plot spikeImp =. 21 {. 9}. spike%100
+plot noiseSSSpike conv |. spikeImp

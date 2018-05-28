@@ -2,6 +2,7 @@ require 'plot'
 
 timeit =: 6!:2
 spaceit =: 7!:2
+pps =: 9!:11  NB. print precision
 
 samp255 =: ?100000 $ 255
 samp10 =: 10*?100000 $ 0
