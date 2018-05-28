@@ -83,14 +83,26 @@ Note 'Figure 7-4'
 Typical low-pass filter kernels
 )
 NB. Figure 7-4 a. Exponential
-plotOpts plot (_20+i.41); (20#0), 0.22 % 1.25^i.21
+expV =. (20#0), 0.22 % 1.25^i.21
+xscale =. _20+i.41
+plotOpts plot xscale; expV
 
 NB. Figure 7-4b. Square pulse
-plotOpts plot (_20+i.41); (20#0), (9#0.1), 12#0
+sqV =. (20#0), (9#0.1), 12#0
+plotOpts plot xscale;sqV 
 
 NB. Figure 7-4c. Sinc
+NB. Offset slightly to get '1' at '0' (0 = 0%0 in J)
+x =. _20.00001+i.41
+sincV=.0.2*(sin x)%x
+plotOpts plot xscale;sincV 
 
-x =. _20+i.41
-plotOpts plot x; (sin x)%x
+NB. Figure 7-5
+delta =. (20#0),1,20#0
 
-
+NB. Figure 7-5a Exponential
+plotOpts plot xscale;delta-expV
+NB. Figure 7-5b Square pulse
+plotOpts plot xscale;delta-sqV
+NB. Figure 7-5c Sinc
+plotOpts plot xscale;delta-sincV
