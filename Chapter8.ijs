@@ -8,16 +8,18 @@ Naive translation from Basic
 require 'trig'
 require 'math/fftw'
 
-NIDFT =: 3 : 0  NB. y contains the real and imaginary frequency domain
-  'rex imx' =. y
-  assert (#rex) = #imx
+NB. NIDFT =: 3 : 0  NB. y contains the real and imaginary frequency domain
+NB.   'rex imx' =. y
+NB.   assert (#rex) = #imx
+NIDFT =: 3 : 0  NB. pass in the complex frequency domain values
+ 'rex imx' =. |:+.y
   n =. +:<:#rex  NB. a 257 rex results in 512 points in the time domain signal
   rex =. rex % -:n  NB. Formula 8-3 for values in frequency domain
   imx =. imx % -:n
   rex =. (-:0{rex) 0 } rex  NB. Two special cases
   rex =. (-:_1{rex) _1} rex
 
-  xx =. 512#0  NB. accumulator
+  xx =. n#0  NB. accumulator
   NB. Eq. 8-2 loop thru each frequency
   for_k. i.#rex do.
 	for_i. i.#xx do.
@@ -29,10 +31,11 @@ NIDFT =: 3 : 0  NB. y contains the real and imaginary frequency domain
 )
 
 rex =. 17# 32
-imx =. 17#0
-NIDFT rex;imx
+NB. imx =. 17#0
+NIDFT rex  NB. matches Figure 8-6 (32 0 0 0 ...
 
 
-basis=: %: %~ 0j2p1&% ^@* */~@i.  NB. http://code.jsoftware.com/wiki/Guides/Fourier_Transform
+basis=: %: %~ 0j2p1&% ^@* */~@i. NB. http://code.jsoftware.com/wiki/Guides/Fourier_Transform
 ft=: +/ .* basis@#
-ift=: +/ .* +@basis@#
+ift=: +/ .* +@basis@#  NB. '(ift rex)% %:#rex' matches NIDFT
+assert 1e_10> +/| ((ift rex)% %:#rex) - (#rex) {. NIDFT rex

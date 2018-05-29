@@ -129,7 +129,7 @@ assert 1e_10>+/|yna-ynb  NB. not quite the same, but sum of differences is small
 NB. ALSO Convolution using a convolved convolution
 h12n =. (#xn){.h1n conv h2n NB. combine the convolutions first
 ync  =. (#xn){.xn conv 81{.h12n
-assert 1e_14>|+/ync - yna 
+assert 1e_10>|+/ync - yna 
 (firstDiffVal conv runninSumImp)
 
 Note 'Figure 7-10'
@@ -137,7 +137,7 @@ Distributive property in system theory
 )
 yna =. (xn conv h1n) + xn conv h2n
 ynb =. xn conv h1n+h2n
-assert 1e_14>+/|yna-ynb  NB. sum of magnitudes of differences is small
+assert 1e_10>+/|yna-ynb  NB. sum of magnitudes of differences is small
 
 Note 'Figute 7-11'
 Transference between the input and output
@@ -148,7 +148,7 @@ hn =. runningSumImp
 yna =. (#xna){.xna conv hn
 xnb =. 3*xna
 ynb =. (#xna){.xnb conv hn
-assert 1e_12>+/|ynb-3*yna
+assert 1e_10>+/|ynb-3*yna
 
 Note 'Figure 7-12'
 Convolving a pulse with itself
