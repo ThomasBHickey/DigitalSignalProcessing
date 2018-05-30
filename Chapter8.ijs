@@ -64,4 +64,10 @@ NDFT =: 3 : 0
 
 assert rex -: 0{"1 +. NDFT NIDFT rex  NB. Just to real part
 
+Note 'Speeds'
+On an array of ? 1000#0:
+NIDFT: 6 seconds
+ift: 0.4 seconds
+ifftw: 0.0003 seconds
+)
 
