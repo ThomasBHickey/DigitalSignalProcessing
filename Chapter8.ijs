@@ -1,12 +1,13 @@
 Note 'Chapter 8'
 The Discrete Fourier Transform
 )
+require '~user/projects/DigitalSignalProcessing/init.ijs'
+
 Note 'Table 8-1'
 The Inverse Discrete Fourier Transform
 Naive translation from Basic
 )
-require 'trig'
-require 'math/fftw'
+
 
 NB. NIDFT =: 3 : 0  NB. y contains the real and imaginary frequency domain
 NB.   'rex imx' =. y
@@ -35,7 +36,32 @@ NB. imx =. 17#0
 NIDFT rex  NB. matches Figure 8-6 (32 0 0 0 ...
 
 
-basis=: %: %~ 0j2p1&% ^@* */~@i. NB. http://code.jsoftware.com/wiki/Guides/Fourier_Transform
-ft=: +/ .* basis@#
-ift=: +/ .* +@basis@#  NB. '(ift rex)% %:#rex' matches NIDFT
+ftbasis=: %: %~ 0j2p1&% ^@* */~@i. NB. http://code.jsoftware.com/wiki/Guides/Fourier_Transform
+ft=: +/ .* ftbasis@#
+ift=: +/ .* +@ftbasis@#
+assert rex -: 0{"1 +. ft ift rex
+
+NB. '(ift rex)% %:#rex' matches NIDFT
 assert 1e_10> +/| ((ift rex)% %:#rex) - (#rex) {. NIDFT rex
+NB. ifftw matches first #rex elements returned by NIDFT rex
+assert 1e_10> +/| (ifftw rex) - (#rex) {. NIDFT rex
+
+Note 'Table 8-2'
+The Discrete Fourier Transform
+)
+NDFT =: 3 : 0 
+  n =. #y
+  rex =. (>:-:n)#0
+  imx =. rex
+  for_k. i.#rex do.
+	for_i. i.n do.
+	  rex =. ((k{rex) + (i{y)*cos 2p1*k*i%n) k} rex
+	  imx =. ((k{imx) - (i{y)*sin 2p1*k*i%n) k} imx
+	end.
+  end.
+  rex j. imx
+)
+
+assert rex -: 0{"1 +. NDFT NIDFT rex  NB. Just to real part
+
+

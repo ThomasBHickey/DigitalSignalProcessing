@@ -1,4 +1,6 @@
 require 'plot'
+require 'trig'
+require 'math/fftw'
 
 timeit =: 6!:2
 spaceit =: 7!:2
@@ -20,8 +22,8 @@ pts60=. 1 o. ((60* o.2)%4096) * i.4096
 pts10=. 1 o. ((22* o.2)%4096) * i.4096
 pts1000=. 1 o. ((1000* o.2)%4096) * i.4096
 
-plot (i.4096); pts 60
-plot (i.4096); pts 5
+NB. plot (i.4096); pts 60
+NB. plot (i.4096); pts 5
 
 
 
