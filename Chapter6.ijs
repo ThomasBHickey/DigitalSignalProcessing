@@ -23,7 +23,7 @@ inputSig9 inputSideConv impResp9
 
 NB. Simpler convolution implementations 
 NB. more than 10x faster on small tests
-conv =: 4 : '+/ /. x*/y'
+NB. conv =: 4 : '+/ /. x*/y'  NB. (defined in init.ijs)  
 tconv =: [: +//. */  NB. the tacit form
 
 assert (inputSig9 inputSideConv impResp9) -: inputSig9 conv impResp9

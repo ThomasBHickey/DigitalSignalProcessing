@@ -1,3 +1,5 @@
+require '~user/projects/DigitalSignalProcessing/init.ijs'
+
 Note 'Chapter 7'
 Properties of Convolution
 No programs in Chapter 7, but I try to

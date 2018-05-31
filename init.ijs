@@ -1,5 +1,4 @@
-require 'plot'
-require 'trig'
+require 'plot trig numeric'
 require 'math/fftw'
 
 timeit =: 6!:2
@@ -12,7 +11,7 @@ thisto =: <: @ (#/.~) @ (i.@#@[ , I.)
 
 NB. intervals histogram data (vs. histogram=: <: @ (#/.~) @ (i.@#@[ , I. )
 histogram =: 4 : '<: #/.~ (i.#x), x I. y'
-
+conv =: 4 : '+/ /. x*/y'
 plotOpts =: 'type dot;pensize 2;symbols square'
 
 pts =: 3 : '1 o. ((y*o.2)%4096)*i.4096'
