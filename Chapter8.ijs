@@ -64,10 +64,36 @@ NDFT =: 3 : 0
 
 assert rex -: 0{"1 +. NDFT NIDFT rex  NB. Just to real part
 
-Note 'Speeds'
+Note 'Speed of inverse df transform'
 On an array of ? 1000#0:
 NIDFT: 6 seconds
 ift: 0.4 seconds
 ifftw: 0.0003 seconds
 )
+
+Note 'Polar Notation'
+*. transforms complex r/i into polar,
+
+)
+
+polar =: 4 : '*. x j. y'
+tpolar =: [: *. j.  NB. tacit version
+assert (*. 3j4) = 3 polar 4  NB. 5 0.927295
+'mag ang' =. *.3j4
+assert 3j4 = mag r. ang
+
+
+NB. Figure 8-10
+pd 'reset'
+pd 'title d.PhaseX[ ]'
+pd 'xcaption Frequency'
+pd 'ycaption Phase (radians)'
+pd plotOpts
+pd ((i.51)%100); (1p1-2p1|1p1+(4p1%25) * i.51)
+pd 'show'
+
+
+
+
+
 

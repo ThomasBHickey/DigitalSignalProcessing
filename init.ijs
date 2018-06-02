@@ -1,4 +1,4 @@
-require 'plot trig numeric'
+require 'plot numeric trig'
 require 'math/fftw'
 
 timeit =: 6!:2
