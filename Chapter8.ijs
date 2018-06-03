@@ -112,7 +112,7 @@ pd 'title a. Re X[ ]'
 pd 'xcaption Frequency'
 pd 'ycaption Amplitude'
 pd plotOpts
-pd 0{"1 +.pol
+pd ((i.51)%100);0{"1 +.pol
 pd 'show'
 
 NB. Figure 8-10 b.
@@ -121,10 +121,35 @@ pd 'title b. Im X[ ]'
 pd 'xcaption Frequency'
 pd 'ycaption Amplitude'
 pd plotOpts
-pd 1{"1 +.pol
+pd ((i.51)%100);1{"1 +.pol
 pd 'show'
 
+NB. Figure 8-13 a.
+re =.(cos(6.28319%13)*(i.51))*( 0.92^i.51)
+pd 'reset'
+pd 'title a. Re X[ ]'
+pd 'xcaption Frequency'
+pd 'ycaption Amplitude'
+pd plotOpts
+pd ((i.51)%100);re
+pd 'show'
 
+pol =. re polar 51#0  NB. polar defined earlier
+NB. Figure 8-13 c.
+pd 'reset'
+pd 'title c. Mag X[ ]'
+pd 'xcaption Frequency'
+pd 'ycaption Amplitude'
+pd plotOpts
+pd ((i.51)%100);0{"1 pol
+pd 'show'
 
-
-
+NB. Figure 8-13 d.
+NB. Evidently J makes all the _1p1 positive, so doesn't match the book
+pd 'reset'
+pd 'title d. Phase X[ ]'
+pd 'xcaption Frequency'
+pd 'ycaption Amplitude'
+pd plotOpts
+pd ((i.51)%100);1{"1 pol
+pd 'show'
