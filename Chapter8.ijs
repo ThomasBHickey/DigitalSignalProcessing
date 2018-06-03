@@ -83,15 +83,46 @@ assert (*. 3j4) = 3 polar 4  NB. 5 0.927295
 assert 3j4 = mag r. ang
 
 
-NB. Figure 8-10
+NB. Figure 8-10 d.
+phase =. (1p1-2p1|1p1+(4p1%25) * i.51)
 pd 'reset'
 pd 'title d.PhaseX[ ]'
 pd 'xcaption Frequency'
 pd 'ycaption Phase (radians)'
 pd plotOpts
-pd ((i.51)%100); (1p1-2p1|1p1+(4p1%25) * i.51)
+pd ((i.51)%100); phase
 pd 'show'
 
+NB. Figure 8-10 c.
+a =. cos +/\10#1%10
+b =. 1-|.a
+mag =. (11#1), a, b, (51-(#a)+(#b)+11)#0
+pd 'reset'
+pd 'title c. Mag X[ ]'
+pd 'xcaption Frequency'
+pd 'ycaption Amplitude'
+pd plotOpts
+pd ((i.51)%100); mag
+pd 'show'
+
+NB. Figure 8-10 a.
+pol =. mag r. phase
+pd 'reset'
+pd 'title a. Re X[ ]'
+pd 'xcaption Frequency'
+pd 'ycaption Amplitude'
+pd plotOpts
+pd 0{"1 +.pol
+pd 'show'
+
+NB. Figure 8-10 b.
+pd 'reset'
+pd 'title b. Im X[ ]'
+pd 'xcaption Frequency'
+pd 'ycaption Amplitude'
+pd plotOpts
+pd 1{"1 +.pol
+pd 'show'
 
 
 
