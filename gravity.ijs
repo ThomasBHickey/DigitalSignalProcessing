@@ -12,10 +12,17 @@ pd 'show'
    r8mid1sec =. 4096{.(((#r8)%2)-2048)}.r8
 mid10sec =. (10*4096){. ((-:#r8)-5*4096){. r8
 
-plot 30}. _30}.highPassK conv r8mid1sec
-plot 30}. _30}.lowPassK conv r8mid1sec
-plot 60}. _60}.lowPassK conv highPassK conv r8mid1sec
-
+pd 'reset'
+pd 'new 0 510 750 750'
+pd 'title lowPassK conv r8'
+pd 30}. _30}.lowPassK conv r8mid1sec
+pd 'new 0 260 750 500'
+pd 'title highPassK conv r8'
+pd 30}. _30}.highPassK conv r8mid1sec
+pd 'new 0 10 750 250'
+pd 'title lowPassK conv w.  highPassK r8'
+pd 60}. _60}.lowPassK conv highPassK conv r8mid1sec
+pd 'show'
 
 plot 1 o. i.100 * o.1
 NB. plot 60hz sine wave sampled at 4096/sec
