@@ -11,7 +11,9 @@ pd 'show'
    pd _100}.100}. highPassK conv r8mid1sec
    r8mid1sec =. 4096{.(((#r8)%2)-2048)}.r8
 mid10sec =. (10*4096){. ((-:#r8)-5*4096){. r8
-
+Note 'Different filters'
+Showing the results of filters on a second of gwf data
+)
 pd 'reset'
 pd 'new 0 510 750 750'
 pd 'title lowPassK conv r8'
