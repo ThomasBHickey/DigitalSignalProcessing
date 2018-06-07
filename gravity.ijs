@@ -1,5 +1,7 @@
 NB.  First a low pass filter kernel (Figure 7-4
 load '~user/projects/Jgwf/init.ijs'
+require '~user/projects/DigitalSignalProcessing/init.ijs'
+
 +/]lowPassK =. (20#0), ((|.i.21)^4) % (20^4)%0.22141
 plotOpts plot lowPassK
 delta =. (20#0),1,20#0
@@ -34,3 +36,14 @@ pwr =. 4 : '+/ *: x conv 1 o. ((y * o.2)%4096)*i.4096'
 lowPassK pwr 60
 NB. Plot the mid 10 seconds of the signal
 plot (_5 + (i.10*4096)%4096); mid10sec
+sec1 =. 4096{. r8
+sec16 =. (4096*16){.r8
+refftsec1 =. 0{"1 +. fftw sec1
+plot refftsec1 
+plot 0{"1 +. fftw sec1 conv lowPassK conv highPassK
+NB. hamWin is Hamming Window from Chapter 16 Eq. 16-1
+plot 1{"1 +. fftw (hamWin 4176)    *sec1 conv lowPassK conv highPassK
+by8 =. 256 8 $ 2048 {. 0{"1 +. fftw sec1
+ asds =. %:+/"1 *: by8
+plot 2}. ]asds =. %:+/"1 *: 256 8 $ 2048 {. 0{"1 +. fftw sec1*hamWin 4096
+plot ^.]asds =. %:+/"1 *: 512 64$ (2048*16) {. 0{"1 +. fftw sec16
