@@ -2,6 +2,10 @@ NB.  First a low pass filter kernel (Figure 7-4
 load '~user/projects/Jgwf/init.ijs'
 require '~user/projects/DigitalSignalProcessing/init.ijs'
 
+hgwf =. fread jpath'~user/projects/Jgwf/samples/H-H1_LOSC_4_V2-1126259446-32.gwf'
+frames =. parseGWF hgwf
+h1strain =. 'H1:LOSC-STRAIN' findVect frames
+
 +/]lowPassK =. (20#0), ((|.i.21)^4) % (20^4)%0.22141
 plotOpts plot lowPassK
 delta =. (20#0),1,20#0
